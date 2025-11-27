@@ -39,6 +39,10 @@ function App() {
   
   // Estado de Productos (lee los productos iniciales)
   const [productos, setProductos] = useState(productosIniciales);
+
+  useEffect(()=>{
+    setProductos(productosIniciales)
+  },[productosIniciales])
   
   // Estado para la "Boleta" (guarda la última orden)
   const [ultimaOrden, setUltimaOrden] = useState(() => {
@@ -99,8 +103,7 @@ function App() {
     return true; // Éxito
   };
   
-  // --- FUNCIONES DE SESIÓN ---
-  
+  // --- FUNCIONES DE SESIÓN --
   const handleLogin = (email, password) => {
     if (email === 'admin@admin.cl' && password === 'admin123') {
       setUsuarioActual({ email: email, esAdmin: true });
@@ -109,7 +112,9 @@ function App() {
       setUsuarioActual({ email: email, esAdmin: false });
       alert(`¡Bienvenido, ${email}!`);
     }
+    
   };
+
 
   const handleLogout = () => {
     setUsuarioActual(null);
