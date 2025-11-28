@@ -1,9 +1,22 @@
 import ProductoCard from '../components/ProductoCard';
 
 import logo from '../assets/images/level_logo.PNG';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-function Inicio({ agregarAlCarrito,productos }) {
-  const productoDestacado = productos.find(p => p.id === 'logitech-g502');
+function Inicio({ agregarAlCarrito }) {
+  const [productos, setProductos] = useState([]);
+  
+  useEffect(()=>
+    {
+      const cargarProductos= async()=>
+      {
+        const cargarProductos= await axios.get('http://localhost:8001/producto');
+        setProductos(cargarProductos.data);
+      }
+  cargarProductos()
+  },[])
+  const productoDestacado = productos.find(p => p.codigo === 'logitech-g502');
 
   return (
     <>

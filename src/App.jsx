@@ -130,11 +130,11 @@ function App() {
           {/* --- Rutas Públicas --- */}
           <Route 
             path="/" 
-            element={<Inicio agregarAlCarrito={agregarAlCarrito} productos={productos} />} 
+            element={<Inicio agregarAlCarrito={agregarAlCarrito} />} 
           />
           <Route 
             path="/catalogo" 
-            element={<Catalogo agregarAlCarrito={agregarAlCarrito} productos={productos} />} 
+            element={<Catalogo agregarAlCarrito={agregarAlCarrito}  />} 
           />
           <Route 
             path="/carrito" 

@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductoCard from '../components/ProductoCard';
+import axios from 'axios';
 
-function Catalogo({ agregarAlCarrito, productos }) {
+function Catalogo({ agregarAlCarrito }) {
   const [filtro, setFiltro] = useState('todos');
 
   const handleFiltroChange = (e) => {
     setFiltro(e.target.value);
   };
-
+  const [productos, setProductos] = useState([]);
+  
+  useEffect(()=>
+    {
+      const cargarProductos= async()=>
+      {
+        const cargarProductos= await axios.get('http://localhost:8001/producto');
+        setProductos(cargarProductos.data);
+      }
+  cargarProductos()
+  },[])
   const productosFiltrados = productos.filter(producto => {
     if (filtro === 'todos') return true;
     return producto.categoria === filtro;
