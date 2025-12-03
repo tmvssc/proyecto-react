@@ -18,6 +18,7 @@ import ProductoDetalle from './pages/ProductoDetalle';
 import Admin from './pages/Admin';
 import CompraExitosa from './pages/CompraExitosa';
 import CompraRechazada from './pages/CompraRechazada';
+import axios from 'axios';
 
 function App() {
   
@@ -77,21 +78,31 @@ function App() {
   };
 
   // Función de 'comprarCarrito' que crea la boleta
-  const comprarCarrito = () => {
+  const comprarCarrito = async () => {
     if (carrito.length === 0) {
       return false; // Falla si el carrito está vacío
     }
-    
+
     // 1. Calcula el total
     const totalOrden = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
-    
+
     // 2. Crea el objeto de la orden (la boleta)
     const nuevaOrden = {
-      id: Date.now(),
+      id: 1,
       fecha: new Date().toLocaleString(),
       items: carrito, // Guarda los items
       total: totalOrden
     };
+
+  const generarDetalle = () => carrito.map(item => item.nombre + " x" + item.cantidad).join(", ");
+
+    const ordenApi = {
+      num_orden: Math.floor(Math.random() * 1000000),
+      detalle: generarDetalle(),
+      total: nuevaOrden.total
+    };
+
+    const res = await axios.post('http://localhost:8001/compra', ordenApi)
 
     // 3. Guarda la orden en el estado y en localStorage
     setUltimaOrden(nuevaOrden);
@@ -99,12 +110,12 @@ function App() {
 
     // 4. Vacía el carrito
     vaciarCarrito();
-    
+
     return true; // Éxito
   };
   
   // --- FUNCIONES DE SESIÓN --
-  const handleLogin = (email, password) => {
+  const handleLogin = async (email, password) => {
     if (email === 'admin@admin.cl' && password === 'admin123') {
       setUsuarioActual({ email: email, esAdmin: true });
       alert('¡Bienvenido, Administrador!');
@@ -112,7 +123,7 @@ function App() {
       setUsuarioActual({ email: email, esAdmin: false });
       alert(`¡Bienvenido, ${email}!`);
     }
-    
+
   };
 
 

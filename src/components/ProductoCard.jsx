@@ -10,7 +10,7 @@ function ProductoCard({ producto, agregarAlCarrito }) {
 
   return (
     <article className="producto">
-      <Link to={`/producto/${producto.id}`}>
+      <Link to={`/producto/${producto.codigo}`}>
         <h3>{producto.nombre}</h3>
         <img src={producto.img} width="200" alt={producto.nombre} />
       </Link>
